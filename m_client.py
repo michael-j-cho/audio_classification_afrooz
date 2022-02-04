@@ -7,6 +7,7 @@ from sklearn.metrics import accuracy_score
 from ClusteringLayer import *
 from clients_data_generation import *
 import config as cfg
+import time
 
 # Make TensorFlow logs less verbose
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
@@ -151,7 +152,7 @@ def main() -> None:
     # parser = argparse.ArgumentParser(description="Flower")
     # parser.add_argument("--partition", type=int, choices=range(0, 10), required=True)
     # args = parser.parse_args()
-
+    start_time = time.time()
     idx = int(sys.argv[1])
     clients_count= int(cfg.configuartion["client_counts"])
     x_train, x_test, y_train, y_test  = load_processed_data(idx,clients_count)
@@ -169,7 +170,9 @@ def main() -> None:
     # Start Flower client
     client = CifarClient(model, x_train, y_train, x_test, y_test)
     fl.client.start_numpy_client("98.203.218.187:8080", client=client)
-
+    end_time = time.time()
+    elapsed_time = start_time - end_time
+    print("Training time: ", str(elapsed_time))
 
 def load_processed_data(clinet_index,total_no_clients):
 

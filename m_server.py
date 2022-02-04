@@ -111,7 +111,7 @@ def main() -> None:
 
 
     # Start Flower server for four rounds of federated learning
-    fl.server.start_server("54.183.195.180:8080", config={"num_rounds": int(cfg.configuartion["server_rounds"])}, strategy=strategy)
+    fl.server.start_server(config={"num_rounds": int(cfg.configuartion["server_rounds"])}, strategy=strategy)
 
 
 
